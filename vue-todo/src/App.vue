@@ -1,8 +1,8 @@
 <template>
   <div id="app">
     <todo-header></todo-header>
-    <todo-input></todo-input>
-    <todo-list></todo-list>
+    <todo-input v-on:addTodoItem="addOneItem"></todo-input>
+    <todo-list :propsData="todoItems" v-on:removeItem="removeOneItem"></todo-list>
     <todo-footer></todo-footer>
   </div>
 </template>
@@ -21,7 +21,36 @@ export default {
     ,TodoInput,
     TodoInput
 
-  }
+  },
+    data: function(){
+        return{
+            todoItems:[],
+        }
+    },
+  created: function(){
+        if(localStorage.length >0){
+            for(var i=0; i<localStorage.length; i++){
+                if(localStorage.key(i) !== "loglevel:webpack-dev-server"){
+                     this.todoItems.push(JSON.parse(localStorage.getItem(localStorage.key(i))));
+                }
+            }
+        }
+    },
+    methods:{
+      addOneItem : function(item){
+              let obj = {completed : false, item };
+            //저장하는 로직
+            localStorage.setItem(item,JSON.stringify(obj));
+            this.todoItems.push(obj);
+            
+      } ,
+      removeOneItem:function(todoItem, i){
+
+            localStorage.removeItem(todoItem.item)
+            this.todoItems.splice(i,1)
+      },
+    },
+
 }
 </script>
 <style>

@@ -17,13 +17,11 @@ export default {
     },
     methods : {
         addTodo : function(){
-            var obj = {completed : false, item : this.newTodoItem};
-
-            //저장하는 로직
-            localStorage.setItem(this.newTodoItem,JSON.stringify(obj));
+            if(this.newTodoItem !== ''){
+                this.$emit('addTodoItem',this.newTodoItem);
+                this.clearInput();
+            }
             
-            this.newTodoItem =""
-            this.clearInput();
         },      
         clearInput : function(){
             this.newTodoItem = "";
