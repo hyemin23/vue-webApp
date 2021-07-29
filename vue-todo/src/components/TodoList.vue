@@ -2,7 +2,9 @@
   <div>
       <ul>
           <li v-for="(todoItem,i) in propsData" v-bind:key="i" class="shadow">
-              <i class="checkBtn fas fa-check-circle" v-bind:class="{checkBtnCompleted : todoItem.completed}" @click="toggleComplete(todoItem,i)"></i>
+              <i class="checkBtn fas fa-check-circle" v-bind:class="{checkBtnCompleted : todoItem.completed}" @click="toggleComplete(propsData,i)"
+              
+              />
               <span v-bind:class="{textCompleted:todoItem.completed}">{{todoItem.item}}</span>
                 <span class="removeBtn" @click="removeTodo(todoItem,i)"
                 >
@@ -20,15 +22,13 @@ export default {
     propsData: Array
   },
     methods:{
-        toggleComplete : function(todoItem,index){
-            localStorage.removeItem(todoItem.item);
-            todoItem.completed = !todoItem.completed;
-            localStorage.setItem(todoItem.item, JSON.stringify(todoItem));
+        toggleComplete : function(propsData,index){
+            this.$emit('toggleItem',propsData,index)
         },
         removeTodo : function(todoItems,i){
           this.$emit('removeItem',todoItems,i);
-
-        }
+        },
+        
     }
 }
 </script>
