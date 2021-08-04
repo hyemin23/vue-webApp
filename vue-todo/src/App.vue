@@ -1,11 +1,9 @@
 <template>
   <div id="app">
-    <todo-header></todo-header>
-    <todo-input v-on:addTodoItem="addOneItem"></todo-input>
-    <todo-list :propsData="todoItems" v-on:removeItem="removeOneItem"
-      v-on:toggleItem="toggleOneItem"
-    />
-    <todo-footer :v-on:clearItems="clearAllItems"></todo-footer>
+    <todo-header/>
+    <todo-input/>
+    <todo-list/>
+    <todo-footer/>
   </div>
 </template>
 
@@ -24,43 +22,29 @@ export default {
     TodoInput
 
   },
-    data: function(){
-        return{
-            todoItems:[],
-        }
-    },
-  created: function(){
-        if(localStorage.length >0){
-            for(var i=0; i<localStorage.length; i++){
-                if(localStorage.key(i) !== "loglevel:webpack-dev-server"){
-                     this.todoItems.push(JSON.parse(localStorage.getItem(localStorage.key(i))));
-                }
-            }
-        }
-    },
     methods:{
-      addOneItem : function(item){
-              let obj = {completed : false, item };
-            //저장하는 로직
-            localStorage.setItem(item,JSON.stringify(obj));
-            this.todoItems.push(obj);
+      // addOneItem : function(item){
+      //         let obj = {completed : false, item };
+      //       //저장하는 로직
+      //       localStorage.setItem(item,JSON.stringify(obj));
+      //       this.todoItems.push(obj);
             
-      } ,
-      removeOneItem:function(todoItem, i){
+      // } ,
+      // removeOneItem:function(todoItem, i){
 
-            localStorage.removeItem(todoItem.item)
-            this.todoItems.splice(i,1)
-      },
-      toggleOneItem:function(todoItem,index){
-          this.todoItems[index].completed = !this.todoItems[index].completed;
-          localStorage.removeItem(todoItem.item);
-            todoItem.completed = !todoItem.completed;
-            localStorage.setItem(todoItem.item, JSON.stringify(todoItem));
+      //       localStorage.removeItem(todoItem.item)
+      //       this.todoItems.splice(i,1)
+      // },
+      // toggleOneItem:function(todoItem,index){
+      //     this.todoItems[index].completed = !this.todoItems[index].completed;
+      //     localStorage.removeItem(todoItem.item);
+      //       todoItem.completed = !todoItem.completed;
+      //       localStorage.setItem(todoItem.item, JSON.stringify(todoItem));
         
-      },
-      clearAllItems:function(){
-        localStorage.clear();
-      }
+      // },
+      // clearAllItems:function(){
+      //   localStorage.clear();
+      // }
     },
 
 }

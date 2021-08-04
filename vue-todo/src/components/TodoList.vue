@@ -1,8 +1,8 @@
 <template>
   <div>
     <transition-group name="list" tag="ul">    
-          <li v-for="(todoItem,i) in propsData" v-bind:key="i" class="shadow">
-              <i class="checkBtn fas fa-check-circle" v-bind:class="{checkBtnCompleted : todoItem.completed}" @click="toggleComplete(propsData,i)"/>
+          <li v-for="(todoItem,i) in this.$store.state.items" v-bind:key="i" class="shadow">
+              <i class="checkBtn fas fa-check-circle" v-bind:class="{checkBtnCompleted : todoItem.completed}" @click="toggleComplete(todoItem,i)"/>
               <span v-bind:class="{textCompleted:todoItem.completed}">{{todoItem.item}}</span>
                 <span class="removeBtn" @click="removeTodo(todoItem,i)"
                 >
@@ -15,15 +15,14 @@
 
 <script>
 export default {
-  props:{
-    propsData: Array
-  },
     methods:{
-        toggleComplete : function(propsData,index){
-            this.$emit('toggleItem',propsData,index)
+        toggleComplete(todoItem,index){
+            // this.$emit('toggleItem',propsData,index)
+            this.$store.commit("toggleOneItem",{ todoItem, index});
         },
-        removeTodo : function(todoItems,i){
-          this.$emit('removeItem',todoItems,i);
+        removeTodo(todoItem,index){
+          // this.$emit('removeItem',todoItems,i);
+          this.$store.commit("removeOneItem",{ todoItem, index});
         },
         
     }

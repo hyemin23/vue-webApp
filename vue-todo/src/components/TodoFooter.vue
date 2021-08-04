@@ -7,9 +7,12 @@
 <script>
 export default {
   methods:{
-    clearTodo : function(){
-      this.$emit('clearItems');
-      localStorage.clear();
+    clearTodo(){
+      // vuex mutations 호출
+      this.$store.commit('clearAllItems');
+
+  //     this.$emit('clearItems');
+  //     localStorage.clear();
     }
   }
 }
